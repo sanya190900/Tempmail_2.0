@@ -26,19 +26,14 @@
 					<li>To <b>clear the list of your messages</b> you should click on the blue button "Clear" which located on the right side of the web-page. Then you will see message "You have no messages".</li>
 					<li>To <b>delete your individual e-mail address</b> you should click on the yellow button "Delete Mail" which located on the right side of the web-page. Then your e-mail address and messages will be deleted.</li>
 				</ul>
-					<table border="0" width="100%">
-						<tr>
-							<td width="75%"><asp:TextBox ID="Mail" runat="server" CssClass="w3-input w3-border"></asp:TextBox></td>
-							<td style="padding-left: 20px;"><asp:Button CssClass="w3-btn w3-red w3-round-large" style="width: 200px;" ID="Generate" runat="server" Text="Generate" OnClick="Generate_Click" /></td>
-						</tr>
-					</table>
+				<table border="0" width="100%">
+					<tr>
+						<td width="75%"><asp:TextBox ID="Mail" runat="server" CssClass="w3-input w3-border"></asp:TextBox></td>
+						<td style="padding-left: 20px;"><asp:Button CssClass="w3-btn w3-red w3-round-large" style="width: 200px;" ID="Generate" runat="server" Text="Generate" OnClick="Generate_Click" /></td>
+					</tr>
+				</table>
 				<h2>Your messages:</h2>
-                <p>
-					From: <asp:TextBox ID="From" runat="server"></asp:TextBox>
-					Subject: <asp:TextBox ID="Subject" runat="server"></asp:TextBox>
-					Date: <asp:TextBox ID="Date" runat="server"></asp:TextBox>
-					Text:<br /><asp:Label ID="Text" runat="server" Text="Label"></asp:Label>
-				</p>
+                <asp:PlaceHolder ID="Messages" runat="server"></asp:PlaceHolder>
 			</div>
 			<div class="btn">
 				<p style="margin-left: 10%;">
@@ -52,19 +47,20 @@
                 </p>
 				<table border="0" >
 					<tr>
-						<td><asp:Button CssClass="w3-btn w3-red w3-round-large" ID="updateMessages" style="width: 160px;" runat="server" Text="Update Messages" OnClick="updateMessages_Click" /></td>
-						<td><asp:Button CssClass="w3-btn w3-green w3-round-large" ID="updateMail" style="width: 80px; margin-left: 10px;" runat="server" Text="Update" OnClick="updateMail_Click" /></td>
+						<td><asp:Button CssClass="w3-btn w3-red w3-round-large" ID="updateMessages" style="width: 160px;" runat="server" Text="Update Messages" OnClick="updateMessages_Click" Visible="False" /></td>
+						<td><asp:Button CssClass="w3-btn w3-green w3-round-large" ID="updateMail" style="width: 80px; margin-left: 10px;" runat="server" Text="Update" OnClick="updateMail_Click" Visible="False" /></td>
 					</tr>
 				</table>
 				<table border="0">
 					<tr>
-						<td><button class="w3-btn w3-blue w3-round-large" name="clearMessages" style="width: 80px;">Clear</button></td>
-						<td><button class="w3-btn w3-yellow w3-round-large" name="deleteMail" style="width: 160px; margin-left: 10px;" >Delete Mail</button></td>
+						<td><asp:Button CssClass="w3-btn w3-blue w3-round-large" ID="clearMessages" style="width: 80px;" runat="server" Text="Clear" OnClick="clearMessages_Click" Visible="False" /></td>
+						<td><asp:Button CssClass="w3-btn w3-yellow w3-round-large" ID="deleteMail" style="width: 160px; margin-left: 10px;" runat="server" Text="Delete Mail" OnClick="deleteMail_Click" Visible="False" /></td>
 					</tr>
 				</table>
+				<asp:Button CssClass="w3-btn w3-purple w3-round-large" ID="sendMessage" style="width: 254px; margin-left: 3px; margin-top: 3px;" runat="server" Text="Send message" Visible="False" PostBackUrl="~/sendMail.aspx"/>
 			</div>
-			<div class="footer"><p class="w3-text-white">Created by group IV-71<br />Copyright &copy; IV-71 (tempmail.com) 2019 All rights reserved</p></div>
 		</div>
+		<div class="footer"><p class="w3-text-white">Created by group IV-71<br />Copyright &copy; IV-71 (tempmail.com) 2019 All rights reserved</p></div>
     </form>
 </body>
 </html>

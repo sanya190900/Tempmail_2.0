@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Xml.Linq;
 
@@ -60,6 +62,12 @@ namespace TempMail
                 (Session["CountdownTimer"] as CountDownTimer).Start();
                 Timer.Text = "Expire email time: 00:10:00";
             }
+            
+            updateMessages.Visible = true;
+            updateMail.Visible = true;
+            clearMessages.Visible = true;
+            deleteMail.Visible = true;
+            sendMessage.Visible = true;
         }
 
         protected void updateMail_Click(object sender, EventArgs e)
@@ -97,11 +105,20 @@ namespace TempMail
 
             Session["access_token"] = details["access_token"];
             Mail.Text = Session["access_token"].ToString();
+
+            updateMessages.Visible = true;
+            updateMail.Visible = true;
+            clearMessages.Visible = true;
+            deleteMail.Visible = true;
+            sendMessage.Visible = true;
         }
 
         protected void updateMessages_Click(object sender, EventArgs e)
         {
-            if(Timer.Text.Equals("Expire email time: 00:00:00") || Timer.Text.Equals(""))
+            if (Session["access_token"] == null)
+                return;
+
+            if (Timer.Text.Equals("Expire email time: 00:00:00") || Timer.Text.Equals(""))
             {
                 Session["access_token"] = null;
                 return;
@@ -114,23 +131,90 @@ namespace TempMail
             request.AddHeader("Authorization", header);
             IRestResponse response = client.Execute(request);
             dynamic data = JObject.Parse(response.Content);
-            string from = data.data[0].sender;
-            string subject = data.data[0].subject;
-            string date = data.data[0].receivedTime;
-            string idMsg = data.data[0].messageId;
+            
+            //string from = data.data[0].sender;
+            //string subject = data.data[0].subject;
+            //string date = data.data[0].receivedTime;
+            int numMsg = data.data.Count;
 
-            client = new RestClient("https://mail.zoho.eu/api/accounts/1305411000000002002/folders/1305411000000002014/messages/" + idMsg + "/content");
-            client.Timeout = -1; 
-            request = new RestRequest(Method.GET);
-            header = "Zoho-oauthtoken " + Session["access_token"].ToString();
-            request.AddHeader("Authorization", header);
-            response = client.Execute(request);
+            Label[] lFrom = new Label[numMsg];
+            Label[] lSubject = new Label[numMsg];
+            Label[] lDate = new Label[numMsg];
+            Label[] lContent = new Label[numMsg];
 
-            data = JObject.Parse(response.Content);
-            From.Text = from;
-            Subject.Text = subject;
-            Date.Text = date;
-            Text.Text = data["data"]["content"];
+            for (int i = 0; i < numMsg; i++)
+            {
+                string idMsg = data.data[i].messageId;
+
+                HtmlGenericControl div = new HtmlGenericControl("div");
+                div.Attributes.Add("class", "msg");
+                
+                lFrom[i] = new Label();
+                lSubject[i] = new Label();
+                lDate[i] = new Label();
+                lContent[i] = new Label();
+
+                client = new RestClient("https://mail.zoho.eu/api/accounts/1305411000000002002/folders/1305411000000002014/messages/" + idMsg + "/content");
+                client.Timeout = -1;
+                request = new RestRequest(Method.GET);
+                header = "Zoho-oauthtoken " + Session["access_token"].ToString();
+                request.AddHeader("Authorization", header);
+                response = client.Execute(request);
+
+                dynamic dataMsg = JObject.Parse(response.Content);
+
+                LiteralControl lineBreak1 = new LiteralControl("<br />");
+                lFrom[i].Text = "From: " + data.data[i].sender;
+                lFrom[i].Attributes.Add("style", "margin-left: 20px;");
+
+                lSubject[i].Text = data.data[i].subject;
+                lSubject[i].Font.Bold = true;
+                lSubject[i].Attributes.Add("style", "margin-left: 50px;");
+
+                System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                string time = data.data[i].receivedTime;
+                dtDateTime = dtDateTime.AddMilliseconds(long.Parse(time)).ToLocalTime();
+                lDate[i].Text = dtDateTime.ToString();
+                lDate[i].Attributes.Add("style", "float: right; margin-right: 20px;");
+
+                LiteralControl lineBreak2 = new LiteralControl("<br /><br />");
+                lContent[i].Text = dataMsg["data"]["content"];
+                LiteralControl lineBreak3 = new LiteralControl("<br />");
+
+                div.Controls.Add(lineBreak1);
+                div.Controls.Add(lFrom[i]);
+                div.Controls.Add(lSubject[i]);
+                div.Controls.Add(lDate[i]);
+                div.Controls.Add(lineBreak2);
+                div.Controls.Add(lContent[i]);
+                div.Controls.Add(lineBreak3);
+
+                Messages.Controls.Add(div);
+                Messages.Controls.Add(lineBreak1);
+            }
+
+            if(numMsg == 0)
+            {
+                HtmlGenericControl h2 = new HtmlGenericControl("h2");
+                Label noMsg = new Label();
+                noMsg.Font.Bold = true;
+                noMsg.Font.Italic = true;
+                noMsg.Text = "You have no messages.";
+
+                h2.Controls.Add(noMsg);
+
+                Messages.Controls.Add(h2);
+            }
+        }
+
+        protected void clearMessages_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void deleteMail_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
