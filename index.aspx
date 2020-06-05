@@ -20,11 +20,12 @@
 
 				<p style="text-align: justify;">How to use this service: </p>
 				<ul style="text-align: justify;">
-					<li>To <b>get an individual e-mail address</b> you should click on the red button "Generate". Then service generates for you temporary e-mail address for 1 hour. If you exceed your time for your temporary e-mail address, it will be deleted. </li>
-					<li>To <b>extend your e-mail address</b> for an another hour you should click on the green button "Update" which located on the right side of the web-page. If you exceed your time for your temporary e-mail address and then click to this button - you will see start web-page without your individual e-mail address. </li>
-					<li>To <b>check your messages</b> you should click on the red button "Update Messages" which located on the right side of the web-page. This service can provide to you only 20 new messages. If you exceed the limit of received messages, you can see only 20 recent incoming messages. If you have not messages yet, you will see message "You have no messages".</li>
+					<li>To <b>get an individual e-mail address</b> you should click on the red button "Generate". Then service generates for you temporary e-mail address for 10 minutes. If you exceed your time for your temporary e-mail address, it will be deleted. </li>
+					<li>To <b>extend your e-mail address</b> for an another 10 minutes you should click on the green button "Update" which located on the right side of the web-page. If you exceed your time for your temporary e-mail address and then click to this button - you will see start web-page without your individual e-mail address. </li>
+					<li>To <b>check your messages</b> you should click on the red button "Update Messages" which located on the right side of the web-page. If you have not messages yet, you will see message "You have no messages".</li>
 					<li>To <b>clear the list of your messages</b> you should click on the blue button "Clear" which located on the right side of the web-page. Then you will see message "You have no messages".</li>
 					<li>To <b>delete your individual e-mail address</b> you should click on the yellow button "Delete Mail" which located on the right side of the web-page. Then your e-mail address and messages will be deleted.</li>
+					<li>To <b>send message from your individual e-mail address</b> you should click on the purple button "Send message" which located on the right side of the web-page. Then you will be redirected to new page with send form. Then you can fill parameters and send your message.</li>
 				</ul>
 				<table border="0" width="100%">
 					<tr>
@@ -60,7 +61,7 @@
 				<asp:Button CssClass="w3-btn w3-purple w3-round-large" ID="sendMessage" style="width: 254px; margin-left: 3px; margin-top: 3px;" runat="server" Text="Send message" Visible="False" PostBackUrl="~/sendMail.aspx"/>
 			</div>
 		</div>
-		<div class="footer"><p class="w3-text-white">Created by group IV-71<br />Copyright &copy; IV-71 (tempmail.com) 2019 All rights reserved</p></div>
+		<div class="footer"><p class="w3-text-white">Created by group IV-71<br />Copyright &copy; IV-71 (tempmail.com) 2020 All rights reserved</p></div>
     </form>
 </body>
 </html>
