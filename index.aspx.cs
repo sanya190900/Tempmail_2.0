@@ -25,7 +25,10 @@ namespace TempMail
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (Timer.Text.Equals("Expire email time: 00:00:00") || Timer.Text.Equals(""))
+            {
+                Timer.Visible = false;
+            }
         }
         protected void Timer1_Tick(object sender, EventArgs e)
         {
@@ -315,7 +318,7 @@ namespace TempMail
             Timer.Visible = false;
             Session["access_token"] = null;
             Session["email"] = null;
-            Session["CountdownTimer"] = new CountDownTimer(TimeSpan.Parse("00:01:00"));
+            Session["CountdownTimer"] = new CountDownTimer(TimeSpan.Parse("00:00:00"));
 
             Generate.Enabled = true;
         }
