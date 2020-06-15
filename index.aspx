@@ -61,7 +61,7 @@
 				<asp:Button CssClass="w3-btn w3-purple w3-round-large" ID="sendMessage" style="width: 254px; margin-left: 3px; margin-top: 3px;" runat="server" Text="Send message" Visible="False" PostBackUrl="~/sendMail.aspx"/>
 			</div>
 		</div>
-		<div class="footer"><p class="w3-text-white">Created by group IV-71<br />Copyright &copy; IV-71 (tempmail.com) 2020 All rights reserved</p></div>
+		<div class="footer"><p class="w3-text-white">Created by students FICT IV-71<br />Copyright © IV-71 2020 All rights reserved</p></div>
     </form>
 </body>
 </html>

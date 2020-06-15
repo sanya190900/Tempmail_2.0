@@ -59,7 +59,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="footer"><p class="w3-text-white">Created by group IV-71<br />Copyright &copy; IV-71 (tempmail.com) 2019 All rights reserved</p></div>
+		<div class="footer"><p class="w3-text-white">Created by students FICT IV-71<br />Copyright &copy; IV-71 2020 All rights reserved</p></div>
     </form>
 </body>
 </html>
